@@ -93,7 +93,7 @@
 	$: {
 		if (!total) {
 			(async () => {
-				await pause();
+				await pause(100);
 				alert("You're out of money :(\nRefresh the page to play again.");
 			})();
 		}
