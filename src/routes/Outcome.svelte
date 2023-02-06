@@ -40,6 +40,7 @@
 				canCloseModal = false;
 			}
 		}}
+		on:keydown={()=>{}}
 	>
 		<h1 class="message"
 			data-testid="outcome"
