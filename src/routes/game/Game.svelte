@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { fade } from "svelte/transition";
 	import { cubicIn } from "svelte/easing";
-	import Hand from "src/routes/Hand.svelte";
-	import Money from "src/routes/Money.svelte";
-	import Controls from "src/routes/Controls.svelte";
-	import Outcome from "src/routes/Outcome.svelte";
+	import Hand from "src/routes/game/Hand.svelte";
+	import Money from "src/routes/game/Money.svelte";
+	import Controls from "src/routes/game/Controls.svelte";
+	import Outcome from "src/routes/game/Outcome.svelte";
 	import type { IHand } from "src/models/interfaces/hand.interface";
 	import type { EOutcome } from "src/models/enums/outcome.enum";
 	import { EProgress } from "src/models/enums/progress.enum";

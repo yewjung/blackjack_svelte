@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import Game from "src/routes/Game.svelte";
-	import Loader from "src/routes/Loader.svelte";
+	import Game from "src/routes/game/Game.svelte";
+	import Loader from "src/routes/game/Loader.svelte";
 	import type { IDeck } from "src/models/interfaces/deck.interface";
 	import type { IHand } from "src/models/interfaces/hand.interface";
 	import { EProgress } from "src/models/enums/progress.enum";

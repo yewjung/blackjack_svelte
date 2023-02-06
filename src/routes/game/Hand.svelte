@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from "svelte/transition";
 	import { cubicInOut, sineIn } from "svelte/easing";
-	import Card from "src/routes/Card.svelte";
+	import Card from "src/routes/game/Card.svelte";
 	import type { ICard } from "src/models/interfaces/card.interface";
 	import { EDuration } from "src/models/enums/duration.enum";
 	import { addCardsToHand, createHand } from "src/functions/gameplay";

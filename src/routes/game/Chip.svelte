@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from "src/routes/Button.svelte";
+	import Button from "src/routes/game/Button.svelte";
 	import type { ChipValue } from "src/models/types/chip-value.type";
 	import { images } from "src/stores";
 
