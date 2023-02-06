@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { EProgress } from "../models/enums/progress.enum";
-	import Button from "./Button.svelte";
+	import { EProgress } from "src/models/enums/progress.enum";
+	import Button from "src/routes/Button.svelte";
 
 	export let progress: EProgress;
 	const dispatcher = createEventDispatcher<{

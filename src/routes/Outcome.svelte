@@ -2,8 +2,8 @@
 	import { createEventDispatcher } from "svelte";
 	import { fade } from "svelte/transition";
 	import { cubicIn } from "svelte/easing";
-	import { EOutcome } from "../models/enums/outcome.enum";
-	import { EDuration } from "../models/enums/duration.enum";
+	import { EOutcome } from "src/models/enums/outcome.enum";
+	import { EDuration } from "src/models/enums/duration.enum";
 
 	export let outcome: EOutcome;
 	const dispatcher = createEventDispatcher<{ acceptOutcome: void; }>();

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import Game from "../routes/Game.svelte";
-	import Loader from "../routes/Loader.svelte";
-	import type { IDeck } from "../models/interfaces/deck.interface";
-	import type { IHand } from "../models/interfaces/hand.interface";
-	import { EProgress } from "../models/enums/progress.enum";
-	import { EDuration } from "../models/enums/duration.enum";
-	import { appConfig } from "../config/app-config";
-	import { images } from "../stores";
+	import Game from "src/routes/Game.svelte";
+	import Loader from "src/routes/Loader.svelte";
+	import type { IDeck } from "src/models/interfaces/deck.interface";
+	import type { IHand } from "src/models/interfaces/hand.interface";
+	import { EProgress } from "src/models/enums/progress.enum";
+	import { EDuration } from "src/models/enums/duration.enum";
+	import { appConfig } from "src/config/app-config";
+	import { images } from "src/stores";
 	import {
 		createHand,
 		fetchDeck,
@@ -16,7 +16,7 @@
 		addCardsToHand,
 		preloadImages,
 		pause
-	} from "../functions/gameplay";
+	} from "src/functions/gameplay";
 
 	let progress: EProgress = EProgress.Betting;
 	let deck: IDeck | undefined;

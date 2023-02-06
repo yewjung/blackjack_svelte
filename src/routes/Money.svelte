@@ -2,12 +2,12 @@
 	import { createEventDispatcher } from "svelte";
 	import { fly } from "svelte/transition";
 	import { cubicOut } from "svelte/easing";
-	import Chip from "./Chip.svelte";
-	import type { ChipValue } from "../models/types/chip-value.type";
-	import { EProgress } from "../models/enums/progress.enum";
-	import { EOutcome } from "../models/enums/outcome.enum";
-	import { EDuration } from "../models/enums/duration.enum";
-	import { evaluateChipsToShow, pause } from "../functions/gameplay";
+	import Chip from "src/routes/Chip.svelte";
+	import type { ChipValue } from "src/models/types/chip-value.type";
+	import { EProgress } from "src/models/enums/progress.enum";
+	import { EOutcome } from "src/models/enums/outcome.enum";
+	import { EDuration } from "src/models/enums/duration.enum";
+	import { evaluateChipsToShow, pause } from "src/functions/gameplay";
 
 	export let progress: EProgress;
 	export let outcome: EOutcome;

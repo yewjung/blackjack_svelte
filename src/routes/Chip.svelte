@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from "./Button.svelte";
-	import type { ChipValue } from "../models/types/chip-value.type";
-	import { images } from "../stores";
+	import Button from "src/routes/Button.svelte";
+	import type { ChipValue } from "src/models/types/chip-value.type";
+	import { images } from "src/stores";
 
 	export let disabled: boolean;
 	export let value: ChipValue;

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { CardCode } from "../models/types/card-code.type";
-	import { EDuration } from "../models/enums/duration.enum";
-	import { getSuit, getValue } from "../functions/card";
-	import { images } from "../stores";
+	import type { CardCode } from "src/models/types/card-code.type";
+	import { EDuration } from "src/models/enums/duration.enum";
+	import { getSuit, getValue } from "src/functions/card";
+	import { images } from "src/stores";
 
 	export let code: CardCode;
 	export let hidden: boolean;

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { fade, fly } from "svelte/transition";
 	import { cubicInOut, sineIn } from "svelte/easing";
-	import Card from "./Card.svelte";
-	import type { ICard } from "../models/interfaces/card.interface";
-	import { EDuration } from "../models/enums/duration.enum";
-	import { addCardsToHand, createHand } from "../functions/gameplay";
+	import Card from "src/routes/Card.svelte";
+	import type { ICard } from "src/models/interfaces/card.interface";
+	import { EDuration } from "src/models/enums/duration.enum";
+	import { addCardsToHand, createHand } from "src/functions/gameplay";
 
 	export let cards: ICard[];
 	export let total: number;

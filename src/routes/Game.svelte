@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { fade } from "svelte/transition";
 	import { cubicIn } from "svelte/easing";
-	import Hand from "./Hand.svelte";
-	import Money from "./Money.svelte";
-	import Controls from "./Controls.svelte";
-	import Outcome from "./Outcome.svelte";
-	import type { IHand } from "../models/interfaces/hand.interface";
-	import type { EOutcome } from "../models/enums/outcome.enum";
-	import { EProgress } from "../models/enums/progress.enum";
-	import { EDuration } from "../models/enums/duration.enum";
-	import { evaluateOutcome, evaluateBlackjack } from "../functions/gameplay";
+	import Hand from "src/routes/Hand.svelte";
+	import Money from "src/routes/Money.svelte";
+	import Controls from "src/routes/Controls.svelte";
+	import Outcome from "src/routes/Outcome.svelte";
+	import type { IHand } from "src/models/interfaces/hand.interface";
+	import type { EOutcome } from "src/models/enums/outcome.enum";
+	import { EProgress } from "src/models/enums/progress.enum";
+	import { EDuration } from "src/models/enums/duration.enum";
+	import { evaluateOutcome, evaluateBlackjack } from "src/functions/gameplay";
 
 	export let playerHand: IHand;
 	export let dealerHand: IHand;
