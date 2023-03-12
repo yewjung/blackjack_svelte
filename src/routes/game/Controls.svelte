@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from "svelte";
 	import { EProgress } from "src/models/enums/progress.enum";
 	import Button from "src/routes/game/Button.svelte";
+	import { idToName, playerTurn, userId } from "src/socket";
 
 	export let progress: EProgress;
 	const dispatcher = createEventDispatcher<{
@@ -12,6 +13,7 @@
 	let canDeal: boolean;
 	let canHit: boolean;
 	let canStand: boolean;
+	$: isYourTurn = $userId === $playerTurn
 
 	// Game progress
 	$: {
@@ -22,10 +24,10 @@
 				canHit = false;
 				canStand = false;
 				break;
-			case EProgress.PlayerTurn:
+			case EProgress.PlayersTurn:
 				canDeal = false;
-				canHit = true;
-				canStand = true;
+				canHit = isYourTurn;
+				canStand = isYourTurn;
 				break;
 			default:
 				canDeal = true;
@@ -34,15 +36,20 @@
 		}
 	}
 </script>
-
 <div class="controls"
-	data-testid="controls"
+data-testid="controls"
 >
+	<Button
+		disabled={false}
+		on:clicked={() => console.log($idToName)}
+	>
+	TEST
+	</Button>
 	<Button
 		disabled={!canDeal}
 		on:clicked={() => dispatcher("deal")}
 	>
-		Deal
+		Bet
 	</Button>
 	<Button
 		disabled={!canHit}
@@ -57,6 +64,8 @@
 		Stand
 	</Button>
 </div>
+
+
 
 <style>
 	.controls {

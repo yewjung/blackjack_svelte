@@ -1,8 +1,17 @@
 export enum EProgress {
-	Betting = 1,
+	Betting = 0,
 	NewGame,
 	BlackjackDealt,
-	PlayerTurn,
+	PlayersTurn,
 	DealerTurn,
 	GameOver
 };
+
+export const NumToProgress = [
+	EProgress.Betting,
+	EProgress.NewGame,
+	EProgress.BlackjackDealt,
+	EProgress.PlayersTurn,
+	EProgress.DealerTurn,
+	EProgress.GameOver
+ ]

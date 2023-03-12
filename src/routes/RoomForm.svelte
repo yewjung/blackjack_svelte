@@ -1,57 +1,24 @@
 <script lang=ts>
-	import { username } from 'src/stores';
+	import { roomId, username } from 'src/stores';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { Action, EEvent } from 'src/models/enums/action.enum';
+	import { connect, disconnect, resetStores, sendMessage } from 'src/socket';
 	let room = '';
 	let user_name = '';
-	let socket: WebSocket;
 
 	onMount(() => {
-		socket = new WebSocket('ws://localhost:8080/ws');
-
-		socket.addEventListener('open', (event) => {
-			console.log('WebSocket connection established');
-		});
-
-		socket.addEventListener('message', (event) => {
-			console.log('message received');
-			console.log(event.data)
-		});
-		/**
-		 * Use name and url from local storage to pre-populate form
-		 * when available.
-		 */
-		const storedUrl = localStorage?.getItem('DAILY_SVELTE_URL');
-		if (storedUrl) {
-			room = storedUrl;
-		}
-		const storedName = localStorage?.getItem('DAILY_SVELTE_NAME');
-		if (storedName) {
-			user_name = storedName;
-		}
+		disconnect()
+		resetStores(true)
+		connect();
 	});
-
-	async function sendMessage(message: any): Promise<any> {
-		return new Promise((resolve, reject) => {
-			socket.onmessage =  (event) => {
-				const response = JSON.parse(event.data);
-				resolve(response);
-			};
-			socket.onerror =  (error) => {
-				reject(error);
-			};
-			socket.send(JSON.stringify(message));
-		});
-
-	}
 
 	async function submitForm() {
 		let message;
 		if (room) {
-			message = {action: Action.JOIN_ROOM}
+			message = {action: Action.JOIN_ROOM, roomId: room, name: user_name}
 		} else {
-			message = {action: Action.CREATE_ROOM}
+			message = {action: Action.CREATE_ROOM, name: user_name}
 		}
 		sendMessage(message)
 			.then(response => {
@@ -61,9 +28,11 @@
 				}
 				// Set Daily name in store for future use
 				username.set(user_name);
+				roomId.set(response.roomId ?? room);
 				goto(`/game`);
 			}).catch(err => {
 				alert("Failed to send message")
+				console.log(err)
 			})
 		
 		

@@ -1,114 +1,60 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Game from "src/routes/game/Game.svelte";
-	import Loader from "src/routes/game/Loader.svelte";
-	import type { IDeck } from "src/models/interfaces/deck.interface";
-	import type { IHand } from "src/models/interfaces/hand.interface";
-	import { EProgress } from "src/models/enums/progress.enum";
-	import { EDuration } from "src/models/enums/duration.enum";
-	import { appConfig } from "src/config/app-config";
 	import { images } from "src/stores";
 	import {
-		createHand,
-		fetchDeck,
-		dealCardsFromDeck,
-		drawCardFromDeck,
-		addCardsToHand,
 		preloadImages,
-		pause
 	} from "src/functions/gameplay";
+	import { dealerHand,otherPlayersHand, playerHand, progressStore, sendMessage } from "src/socket";
+	import { Action } from "src/models/enums/action.enum";
 
-	let progress: EProgress = EProgress.Betting;
-	let deck: IDeck | undefined;
-	let playerHand: IHand = createHand();
-	let dealerHand: IHand = createHand();
-	$: ready = !appConfig.waitForAnimations || !!deck;
+	let betAmount: number = 0;
+
 
 	onMount(async () => {
-		const [deckResponse, imagesResponse] = await Promise.all([
-			fetchDeck(),
-			preloadImages()
-		]);
-		deck = deckResponse;
+		const imagesResponse = await preloadImages()
 		images.set(imagesResponse);
 	});
 
-	function reset(): void {
-		progress = EProgress.Betting;
-		playerHand = createHand();
-		dealerHand = createHand();
-	}
-
-	async function deal(): Promise<void> {
-		progress = EProgress.NewGame;
-		const { player, dealer } = await dealCardsFromDeck(deck?.id);
-
-		for (let i = 0; i < 2; i++) {
-			dealerHand = addCardsToHand(dealerHand, dealer[i]);
-			await pause(EDuration.Card);
-			playerHand = addCardsToHand(playerHand, player[i]);
-			await pause(EDuration.Card);
-		}
-
-		if (playerHand.total === 21 || dealerHand.total === 21) {
-			await pause(EDuration.Card);
-			progress = EProgress.BlackjackDealt;
-		} else {
-			progress = EProgress.PlayerTurn;
-		}
+	async function bet(): Promise<void> {
+		sendMessage({
+			action: Action.SEND_BET,
+			bet: betAmount,
+		})
 	}
 
 	async function hit(): Promise<void> {
-		const newCard = await drawCardFromDeck(deck?.id);
-		playerHand = addCardsToHand(playerHand, newCard);
-		await pause(EDuration.Card);
-		if (playerHand.total > 21) {
-			progress = EProgress.GameOver;
-		}
+		sendMessage({
+			action: Action.SEND_HIT
+		})
 	}
 
 	async function stand(): Promise<void> {
-		progress = EProgress.DealerTurn;
-		await pause(EDuration.Card);
-		while (dealerHand.total < 17) {
-			const newCard = await drawCardFromDeck(deck?.id);
-			dealerHand = addCardsToHand(dealerHand, newCard);
-			await pause(EDuration.DealerAction);
-		}
-		progress = EProgress.GameOver;
+		sendMessage({
+			action: Action.SEND_STAND
+		})
 	}
 </script>
 
-{#if ready}
-	<main class="game">
-		<Game
-			{playerHand}
-			{dealerHand}
-			{progress}
-			on:acceptOutcome={reset}
-			on:deal={deal}
-			on:hit={hit}
-			on:stand={stand}
-		/>
-	</main>
-{:else}
-	<div class="loader">
-		<Loader />
-	</div>
-{/if}
+<main class="game">
+	<Game
+		playerHand={$playerHand}
+		dealerHand={$dealerHand}
+		otherPlayersHand={$otherPlayersHand}
+		progress={$progressStore}
+		bind:bet={betAmount}
+		on:deal={bet}
+		on:hit={hit}
+		on:stand={stand}
+	/>
+</main>
 
 <style>
 	.game {
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		min-height: 100%;
-	}
-
-	.loader {
-		display: flex;
-		justify-content: center;
-		align-items: center;
 		height: 100%;
 	}
+
 </style>

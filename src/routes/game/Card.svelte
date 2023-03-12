@@ -13,12 +13,18 @@
 	$: cardAlt = getAltText(name);
 
 	function getName(cardCode: CardCode): string {
+		if (cardCode === "HIDDEN") {
+			return "CARD_BACK";
+		}
 		const value = getValue(cardCode);
 		const suit = getSuit(cardCode);
 		return `${value}_${suit}`;
 	}
 
 	function getAltText(name: string) {
+		if (name === "HIDDEN") {
+			return "HIDDEN"
+		}
 		const [number, suit] = name
 			.split("_")
 			.map(value => value[0] + value.substring(1).toLowerCase());

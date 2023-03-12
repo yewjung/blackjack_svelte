@@ -1,4 +1,4 @@
-import type { IDrawData } from "../models/api/draw-data.interface";
+import type { IDrawData, Response } from "../models/api/draw-data.interface";
 import type { IDeckData } from "../models/api/deck-data.interface";
 import type { IDeck } from "../models/interfaces/deck.interface";
 import type { IHand } from "../models/interfaces/hand.interface";
@@ -11,6 +11,8 @@ import { API_URL } from "../models/constants";
 import { appConfig } from "../config/app-config";
 import { createCard } from "./card";
 import { wait } from "./utility";
+import { sendMessage } from "src/socket";
+import { Action } from "src/models/enums/action.enum";
 
 interface IDealtCards {
 	player: ICard[];
@@ -65,10 +67,23 @@ export async function drawCardFromDeck(deckId: string | undefined): Promise<ICar
 	return createCard(data.cards[0]);
 }
 
+export async function drawCardFromServer(): Promise<Response> {
+	return sendMessage({
+		event: Action.SEND_HIT
+	})
+}
+
 export function addCardsToHand(hand: IHand, ...newCards: ICard[]): IHand {
-	const cards = [...hand.cards, ...newCards];
+	const cards = [...hand.cards]
+	for (const card of newCards) {
+		if (card.reveal) {
+			cards[0] = card
+		} else {
+			cards.push(card)
+		}
+	}
 	let numberOfAces = cards.filter(card => card.value === "ACE").length;
-	let total = cards.reduce((total, card) => total + card.point, 0);
+	let total = cards.reduce((total, card) => total + card.point ?? 0, 0);
 	while (total > 21 && numberOfAces > 0) {
 		total -= 10;
 		numberOfAces--;

@@ -6,8 +6,6 @@
 	import { EDuration } from "src/models/enums/duration.enum";
 
 	export let outcome: EOutcome;
-	const dispatcher = createEventDispatcher<{ acceptOutcome: void; }>();
-	let canCloseModal: boolean = false;
 	$: message = getMessage(outcome);
 	
 	// TODO: display monetary change along with the outcome message
@@ -33,14 +31,6 @@
 {#if outcome}
 	<div class="modal"
 		in:fade={{ duration: EDuration.Modal, easing: cubicIn }}
-		on:introend={() => canCloseModal = true}
-		on:click={() => {
-			if (canCloseModal) {
-				dispatcher("acceptOutcome");
-				canCloseModal = false;
-			}
-		}}
-		on:keydown={()=>{}}
 	>
 		<h1 class="message"
 			data-testid="outcome"

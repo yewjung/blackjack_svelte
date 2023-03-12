@@ -1,7 +1,7 @@
 import type { IAppConfig } from "../models/interfaces/app-config.interface";
-import { imageStrategyOnDemand } from "../functions/images";
+import { imageStrategyPreload } from "../functions/images";
 
 export const appConfig: IAppConfig = {
-	imageStrategy: imageStrategyOnDemand,
+	imageStrategy: imageStrategyPreload,
 	waitForAnimations: true,
 };

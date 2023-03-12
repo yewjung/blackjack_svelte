@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
 	import App from "src/routes/game/App.svelte";
-	window.onpopstate = function () {
-		if (confirm("Are you sure you want to leave the room?")) {
-				window.history.back();
-		}
-	};
+	function beforeunload(event: BeforeUnloadEvent) {
+        event.preventDefault();
+		event.returnValue = '';
+    }
+
 </script>
+
+
+<svelte:window on:beforeunload={beforeunload}/>
 <App></App>

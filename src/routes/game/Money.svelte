@@ -12,7 +12,7 @@
 	export let progress: EProgress;
 	export let outcome: EOutcome;
 	const dispatcher = createEventDispatcher<{ betPlaced: boolean }>();
-	let bet: number = 0;
+	export let bet: number = 0;
 	let total: number = 500;
 	let betChips: ChipValue[] = [];
 	let hasUpdatedTotal = false;
@@ -127,6 +127,7 @@
 		</div>
 	</div>
 	
+	{#if canBet}
 	<div class="wallet">
 		<div class="wallet__chips">
 			{#each walletChips as chip}
@@ -143,6 +144,7 @@
 			${total - bet}
 		</h4>
 	</div>
+	{/if}
 </div>
 
 <style>
@@ -151,7 +153,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		position: absolute;
-		height: 100%;
+		height: 100vh;
 		left: 32px;
 	}
 

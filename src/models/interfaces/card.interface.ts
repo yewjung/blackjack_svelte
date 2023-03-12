@@ -7,4 +7,5 @@ export interface ICard {
 	point: number;
 	suit: Suit;
 	code: CardCode;
+	reveal?: boolean;
 }
