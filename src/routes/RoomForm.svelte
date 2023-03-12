@@ -9,7 +9,6 @@
 
 	onMount(() => {
 		disconnect()
-		resetStores(true)
 		connect();
 	});
 

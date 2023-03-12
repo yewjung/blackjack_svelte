@@ -42,7 +42,6 @@ export async function connect() {
   socket = new WebSocket('ws://localhost:8080/ws');
 
   socket.addEventListener('message', (event) => {
-    console.log('message received');
     const response: Response = JSON.parse(event.data);
     if (!response) {
         return;
