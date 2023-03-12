@@ -40,12 +40,6 @@
 data-testid="controls"
 >
 	<Button
-		disabled={false}
-		on:clicked={() => console.log($idToName)}
-	>
-	TEST
-	</Button>
-	<Button
 		disabled={!canDeal}
 		on:clicked={() => dispatcher("deal")}
 	>

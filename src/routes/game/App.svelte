@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import Game from "src/routes/game/Game.svelte";
 	import { images } from "src/stores";
 	import {
 		preloadImages,
 	} from "src/functions/gameplay";
-	import { dealerHand,otherPlayersHand, playerHand, progressStore, sendMessage } from "src/socket";
+	import { dealerHand,otherPlayersHand, playerHand, progressStore, resetStores, sendMessage } from "src/socket";
 	import { Action } from "src/models/enums/action.enum";
 
 	let betAmount: number = 0;
@@ -15,6 +15,10 @@
 		const imagesResponse = await preloadImages()
 		images.set(imagesResponse);
 	});
+
+	onDestroy(() => {
+		resetStores(true)
+	})
 
 	async function bet(): Promise<void> {
 		sendMessage({
